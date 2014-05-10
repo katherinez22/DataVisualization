@@ -1,4 +1,4 @@
-Final Project
+Visualization: Top 1,000 Baby Names of latest 10 years in US 
 ==============================
 
 | **Name**  | Katherine Zhao  |
