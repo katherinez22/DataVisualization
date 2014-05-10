@@ -1,4 +1,4 @@
-data_visualization
+Data Visualization
 ==================
 
-showing all anwsome data visualization I created
+This repository shows some data visualization I created. Enjoy!
