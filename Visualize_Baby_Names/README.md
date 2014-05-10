@@ -23,7 +23,7 @@ To run this code, please enter the following commands in R:
 
 ```
 library(shiny)
-shiny::runGitHub('msan622', 'katherinez22', subdir = 'final-project')
+shiny::runGitHub('DataVisualization', 'katherinez22', subdir = 'Visualize_Baby_Names')
 ```
 
 This will start the `shiny` app. See below for details on how to interact with the visualization.
