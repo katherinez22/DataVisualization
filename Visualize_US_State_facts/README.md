@@ -17,7 +17,7 @@ To run this code, please enter the following commands in R:
 
 ```
 library(shiny)
-shiny::runGitHub('DataVisualization', 'katherinez22', subdir = 'homework3')
+shiny::runGitHub('DataVisualization', 'katherinez22', subdir = 'Visualize_US_State_facts')
 ```
 
 This will start the `shiny` app. See below for details on how to interact with the visualization.

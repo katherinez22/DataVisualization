@@ -19,19 +19,16 @@ To run this code, please enter the following commands in R:
 
 ```
 library(shiny)
-shiny::runGitHub('msan622', 'katherinez22', subdir = 'homework5')
+shiny::runGitHub('DataVisualization', 'katherinez22', subdir = 'Visualize_Time_Series')
 ```
 
 This will start the `shiny` app. See below for details on how to interact with the visualization.
 
 ## Data Set ##
 
-In this project, I visualized Road Casualties in Great Britain from 1969 to 1984. For more information about this dataset, please search `?Seatbelts` in `R`.
-
+The data set I used for this visualization is Road Casualties in Great Britain from 1969 to 1984. For more information about this dataset, please search `?Seatbelts` in `R`.
 
 ## Discussion ##
-
-In this homework, I chose to implement Option 2: Interactive with brushing form of interactivity. Two techiniques I chose are line plot and stacked area plot. 
 
 In this visualization, I tried to visualize the number of deaths over time when people sit in different places in the car. By having `drivers`, `front`, and `rear` columns in my original data, I can visulize the time series for `Drivers killed`, `Front-seat passengers killed`, and `Rear-seat passengers killed`, respectively.
 
