@@ -1,4 +1,4 @@
 Data Visualization
 ==================
 
-This repository shows some data visualization I created. Enjoy!
+This repository shows some data visualizations I created. Enjoy!
