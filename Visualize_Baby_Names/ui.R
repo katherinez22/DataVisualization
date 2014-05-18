@@ -28,8 +28,7 @@ shinyUI(navbarPage("Baby Names of 50 States",
          tabPanel("Map",sidebarLayout(
            sidebarPanel(width=3,
                         textInput("nameSearch2", "Baby Name Search: ", ""),
-                        div(class = "well well-sm",
-                            'Please search a specific name or find one in the Raw Data Panel.'),
+                        p("Please search a specific name or find one in the Raw Data Panel."),
                         br(),
                         selectInput("year2","Year: ",
                                     c(2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012),
@@ -67,9 +66,27 @@ shinyUI(navbarPage("Baby Names of 50 States",
            ) # end of main panel
          ) # end of sidebarLayout 
          ), # end tabpanel
+         tabPanel("Bar Chart",sidebarLayout(
+           sidebarPanel(width=3,
+                        selectInput("year5", "Year: ", 
+                                    c(2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012),
+                                    selected = 2012),
+                        br(),
+                        radioButtons("sort5", "Sort Order:", c("Alphabetical", "Name Frequency"),
+                                     selected = c("Alphabetical")),
+                        br(),
+                        # Add a download link
+                        HTML("<p align=\"center\">[ <a href=\"https://github.com/katherinez22/msan622/tree/master/final-project\">download source</a> ]</p>")
+           ), #end of sidebarPanel
+           mainPanel(
+             plotOutput("bar",width="100%",height="100%")
+           ) # end of main panel
+         ) # end of sidebarLayout 
+         ), # end tabpanel
          tabPanel("Raw Data", sidebarLayout(
            sidebarPanel(width=3,
                         textInput("nameSearch4", "Baby Name Search: ", ""),
+                        p("Please search baby names starting with certain characters. "),
                         br(),
                         sliderInput("year4", "Year Range:  ", min=2002, max=2012, value=c(2002,2012), step=1, format='####'),
                         br(), 

@@ -7,6 +7,7 @@ require(Hmisc)
 require(ggmap)
 require(maptools)
 require(plyr)
+library(GGally)
 
 # Load the dataset
 loadData <- function() {
@@ -46,9 +47,30 @@ theme_legend_small <- function() {
       panel.grid.major = element_line(color = "grey70", linetype = 3),
       axis.ticks.y = element_blank(), 
       axis.title = element_text(size = rel(1.2), face = "bold"),
-      strip.background=element_rect(fill="white", size = rel(1.2))
+      strip.background=element_rect(fill="white", size = rel(1.2)),
+      text=element_text(family="Georgia", face="italic")
     )
   )
+}
+
+theme_legend_bar <- function() {
+  return(
+    theme(
+      panel.border = element_blank(),
+      panel.background = element_rect(fill = NA),
+      panel.grid.major = element_blank(),
+      panel.grid.minor = element_line(color = "grey70", linetype = 3),
+      axis.ticks = element_blank(), 
+      axis.title = element_text(size = rel(1.2), face = "bold"),
+      strip.background=element_rect(fill="white", size = rel(1.2)),
+      text=element_text(family="Georgia", face="italic")
+    )
+  )
+}
+
+# Label formatter for numbers in thousands.
+k_formatter <- function(x) {
+  return(sprintf("%gk", round(x / 1000)))
 }
 
 
@@ -138,10 +160,6 @@ getSmall <- function(df, reaction){
     }
     new_df <- df[indices, ]
   }
-  # Label formatter for numbers in thousands.
-  k_formatter <- function(x) {
-    return(sprintf("%gk", round(x / 1000)))
-  }
   new_df2 <- aggregate(Number ~ State+Year, new_df, sum)
   p <- ggplot(new_df2, aes(x=Year, y=Number))
   p <- p + geom_path(alpha=0.8, color="#386cb0", size=1.2)
@@ -154,11 +172,35 @@ getSmall <- function(df, reaction){
 }
 
 
+# Get bar chart
+getBar <- function(df, reaction){
+  year <- reaction$year
+  sort <- reaction$sort
+  indices <- which(df$Year == year)
+  new_df <- df[indices, ]
+  new_df2 <- aggregate(Number ~ Division, new_df, sum)
+  new_df3 <- new_df2[order(new_df2$Number, decreasing=TRUE), ]
+  if (sort == "Alphabetical") {
+    p <- ggplot(new_df2, aes(x=Division, y=Number)) 
+    p <- p + scale_x_discrete(limits=new_df2$Division)
+  }
+  else {
+    p <- ggplot(new_df3, aes(x=Division, y=Number)) 
+    p <- p + scale_x_discrete(limits=new_df3$Division)
+  }
+  p <- p + geom_bar(stat="identity", width=0.7, fill="#CC79A7")
+  p <- p + xlab("Division") 
+  p <- p + scale_y_continuous(name="Number of Baby with Top Names", label = k_formatter, expand = c(0,0))
+  p <- p + theme_legend_bar()
+  return(p)
+}
+
+
 # Get raw data
 getTable <- function(df, reaction){
   nameSearch = capitalize(tolower(reaction$nameSearch))
   new_df <- subset(df, grepl(nameSearch, Name))
-  year = reaction$year
+  year <- reaction$year
   indices <- which((new_df$Year >= year[1] & new_df$Year <= year[2]))
   new_df <- new_df[indices,-1]
   new_df$region <- toupper(new_df$region)
@@ -209,10 +251,17 @@ shinyServer(function(input, output) {
     ))
   }) # getReaction4
   
+  getReaction5 <- reactive({
+    return(list(year = input$year5,
+                sort = input$sort5
+    ))
+  }) # getReaction5
+  
   # Output Plots.
   output$wordCloud <- renderPlot({print(getWordCloud(localFrame, getReaction1()))},width=1000,height=800) # output wordCloud
   output$map <- renderPlot({print(getMap(localFrame, getReaction2()))},width=1200,height=800) # output map
-  output$small <- renderPlot({print(getSmall(localFrame, getReaction3()))},width=1000,height=800) # output areaPlot 
+  output$small <- renderPlot({print(getSmall(localFrame, getReaction3()))},width=1000,height=800) # output small 
+  output$bar <- renderPlot({print(getBar(localFrame, getReaction5()))},width=900,height=700) # output bar
   output$table <- renderDataTable({print(getTable(localFrame, getReaction4()))},
                                   options = list(sPaginationType = "two_button",
                                                  sScrollY = "400px",
