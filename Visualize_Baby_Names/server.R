@@ -45,7 +45,7 @@ theme_legend_small <- function() {
       panel.background = element_rect(fill = NA),
       panel.grid.minor = element_blank(),
       panel.grid.major = element_line(color = "grey70", linetype = 3),
-      axis.ticks.y = element_blank(), 
+      axis.ticks.y = element_blank(),
       axis.title = element_text(size = rel(1.2), face = "bold"),
       strip.background=element_rect(fill="white", size = rel(1.2)),
       text=element_text(family="Georgia", face="italic")
@@ -60,7 +60,7 @@ theme_legend_bar <- function() {
       panel.background = element_rect(fill = NA),
       panel.grid.major = element_blank(),
       panel.grid.minor = element_line(color = "grey70", linetype = 3),
-      axis.ticks = element_blank(), 
+      axis.ticks = element_blank(),
       axis.title = element_text(size = rel(1.2), face = "bold"),
       strip.background=element_rect(fill="white", size = rel(1.2)),
       text=element_text(family="Georgia", face="italic")
@@ -96,12 +96,12 @@ getWordCloud <- function(df, reaction){
   set.seed(375) # to make it reproducibles
   # plot the word cloud
   return(wordcloud(words = cloud_df$Name, freq = cloud_df$Number,
-            scale = c(5, 0.3),    
+            scale = c(5, 0.3),
             random.order = FALSE,
-            rot.per = 0.15,        
+            rot.per = 0.15,
             colors = brewer.pal(8, "Dark2"),
             random.color = TRUE,
-            use.r.layout = FALSE    
+            use.r.layout = FALSE
   )) # end return
 } # end getWordCloud
 
@@ -181,15 +181,15 @@ getBar <- function(df, reaction){
   new_df2 <- aggregate(Number ~ Division, new_df, sum)
   new_df3 <- new_df2[order(new_df2$Number, decreasing=TRUE), ]
   if (sort == "Alphabetical") {
-    p <- ggplot(new_df2, aes(x=Division, y=Number)) 
+    p <- ggplot(new_df2, aes(x=Division, y=Number))
     p <- p + scale_x_discrete(limits=new_df2$Division)
   }
   else {
-    p <- ggplot(new_df3, aes(x=Division, y=Number)) 
+    p <- ggplot(new_df3, aes(x=Division, y=Number))
     p <- p + scale_x_discrete(limits=new_df3$Division)
   }
   p <- p + geom_bar(stat="identity", width=0.7, fill="#CC79A7")
-  p <- p + xlab("Division") 
+  p <- p + xlab("Division")
   p <- p + scale_y_continuous(name="Number of Baby with Top Names", label = k_formatter, expand = c(0,0))
   p <- p + theme_legend_bar()
   return(p)
@@ -219,9 +219,9 @@ globalData <- loadData()
 # Create shiny server.
 shinyServer(function(input, output) {
   cat("Press \"ESC\" to exit...\n")
-  # Copy the data frame 
+  # Copy the data frame
   localFrame <- globalData
-  
+
   getReaction1 <- reactive({
     return(list(stateName = input$stateName1,
                 year = input$year1,
@@ -229,7 +229,7 @@ shinyServer(function(input, output) {
                 wordNumber = input$wordNumber1
     ))
   }) # getReaction1
-  
+
   getReaction2 <- reactive({
     return(list(nameSearch = input$nameSearch2,
                 year = input$year2,
@@ -237,33 +237,33 @@ shinyServer(function(input, output) {
                 colorScheme = input$colorScheme2
     ))
   }) # getReaction2
-  
+
   getReaction3 <- reactive({
     return(list(nameSearch = input$nameSearch3,
                 division = input$division3,
                 sexChoose = input$sexChoose3
     ))
   }) # getReaction3
-  
+
   getReaction4 <- reactive({
     return(list(nameSearch = input$nameSearch4,
                 year = input$year4
     ))
   }) # getReaction4
-  
+
   getReaction5 <- reactive({
     return(list(year = input$year5,
                 sort = input$sort5
     ))
   }) # getReaction5
-  
+
   # Output Plots.
   output$wordCloud <- renderPlot({print(getWordCloud(localFrame, getReaction1()))},width=1000,height=800) # output wordCloud
   output$map <- renderPlot({print(getMap(localFrame, getReaction2()))},width=1200,height=800) # output map
-  output$small <- renderPlot({print(getSmall(localFrame, getReaction3()))},width=1000,height=800) # output small 
+  output$small <- renderPlot({print(getSmall(localFrame, getReaction3()))},width=1000,height=800) # output small
   output$bar <- renderPlot({print(getBar(localFrame, getReaction5()))},width=900,height=700) # output bar
-  output$table <- renderDataTable({print(getTable(localFrame, getReaction4()))},
-                                  options = list(sPaginationType = "two_button",
-                                                 sScrollY = "400px",
-                                                 bScrollCollapse = 'true')) # output table
+  output$table <- renderDataTable({print(getTable(localFrame, getReaction4()))})
+#                                   options = list(sPaginationType = "two_button",
+#                                                  sScrollY = "400px",
+#                                                  bScrollCollapse = 'true')) # output table
   }) # shinyServer
