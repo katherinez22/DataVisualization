@@ -18,7 +18,7 @@ shinyUI(navbarPage("Baby Names of 50 States",
                      radioButtons("sexChoose1", "Gender:", c("Female", "Male"),
                                   selected = c("Female")),
                      br(),
-                     HTML("<p align=\"center\">[ <a href=\"https://github.com/katherinez22/msan622/tree/master/final-project\">download source</a> ]</p>")             
+                     HTML("<p align=\"center\">[ <a href=\"https://github.com/katherinez22/DataVisualization/tree/master/Visualize_Baby_Names\">download source</a> ]</p>")             
                     ), #end sidebarPanel
                     mainPanel(
                       plotOutput("wordCloud",width="100%",height="100%")
@@ -41,7 +41,7 @@ shinyUI(navbarPage("Baby Names of 50 States",
                                     c("RdPu", "BuGn", "PuRd", "OrRd", "PuBu", "YlGn"),
                                     selected = "RdPu"),
                         # Add a download link
-                        HTML("<p align=\"center\">[ <a href=\"https://github.com/katherinez22/msan622/tree/master/final-project\">download source</a> ]</p>")
+                        HTML("<p align=\"center\">[ <a href=\"https://github.com/katherinez22/DataVisualization/tree/master/Visualize_Baby_Names\">download source</a> ]</p>")
            ), #end of sidebarPanel
            mainPanel(
              plotOutput("map",width="100%",height="100%")
@@ -59,7 +59,7 @@ shinyUI(navbarPage("Baby Names of 50 States",
                                      selected = c("Female", "Male")),
                         br(),
                         # Add a download link
-                        HTML("<p align=\"center\">[ <a href=\"https://github.com/katherinez22/msan622/tree/master/final-project\">download source</a> ]</p>")
+                        HTML("<p align=\"center\">[ <a href=\"https://github.com/katherinez22/DataVisualization/tree/master/Visualize_Baby_Names\">download source</a> ]</p>")
            ), #end of sidebarPanel
            mainPanel(
              plotOutput("small",width="100%",height="100%")
@@ -76,7 +76,7 @@ shinyUI(navbarPage("Baby Names of 50 States",
                                      selected = c("Alphabetical")),
                         br(),
                         # Add a download link
-                        HTML("<p align=\"center\">[ <a href=\"https://github.com/katherinez22/msan622/tree/master/final-project\">download source</a> ]</p>")
+                        HTML("<p align=\"center\">[ <a href=\"https://github.com/katherinez22/DataVisualization/tree/master/Visualize_Baby_Names\">download source</a> ]</p>")
            ), #end of sidebarPanel
            mainPanel(
              plotOutput("bar",width="100%",height="100%")
@@ -91,7 +91,7 @@ shinyUI(navbarPage("Baby Names of 50 States",
                         sliderInput("year4", "Year Range:  ", min=2002, max=2012, value=c(2002,2012), step=1, format='####'),
                         br(), 
                         # Add a download link
-                        HTML("<p align=\"center\">[ <a href=\"https://github.com/katherinez22/msan622/tree/master/final-project\">download source</a> ]</p>")
+                        HTML("<p align=\"center\">[ <a href=\"https://github.com/katherinez22/DataVisualization/tree/master/Visualize_Baby_Names\">download source</a> ]</p>")
            ), #end of sidebarPanel
            mainPanel(
              dataTableOutput("table")
